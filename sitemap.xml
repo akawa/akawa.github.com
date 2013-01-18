@@ -1,12 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://akawa.github.com/blog/2013/01/18/ce-shi-wen-dang/</loc>
-        <lastmod>2013-01-18T08:45:14+08:00</lastmod>
-    </url>
-    <url>
         <loc>http://akawa.github.com/blog/archives/</loc>
-        <lastmod>2013-01-18T08:45:14+08:00</lastmod>
+        <lastmod>2013-01-17T17:24:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://akawa.github.com/robots.txt</loc>
@@ -14,6 +10,6 @@
     </url>
     <url>
         <loc>http://akawa.github.com/</loc>
-        <lastmod>2013-01-18T08:45:14+08:00</lastmod>
+        <lastmod>2013-01-18T08:37:23+08:00</lastmod>
     </url>
 </urlset>
