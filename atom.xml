@@ -4,7 +4,7 @@
   <title><![CDATA[Well's blog]]></title>
   <link href="http://akawa.github.com/atom.xml" rel="self"/>
   <link href="http://akawa.github.com/"/>
-  <updated>2013-01-23T14:56:52+08:00</updated>
+  <updated>2013-02-02T09:02:09+08:00</updated>
   <id>http://akawa.github.com/</id>
   <author>
     <name><![CDATA[Well]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[不遵守rails约定的后果之一]]></title>
+    <link href="http://akawa.github.com/blog/2013/02/02/bu-zun-shou-railsyue-ding-de-hou-guo-zhi-%5B%3F%5D/"/>
+    <updated>2013-02-02T08:51:00+08:00</updated>
+    <id>http://akawa.github.com/blog/2013/02/02/bu-zun-shou-railsyue-ding-de-hou-guo-zhi-[?]</id>
+    <content type="html"><![CDATA[<p>跟着Ruby on Rails Tutorial 过了一遍rails 后决定自己动手试试</p>
+
+<p>index,show等GET页面都没事</p>
+
+<p>结果到new这个POST页面就被卡了一天</p>
+
+<p>看不明白为啥总说我路径错误，如果我用脚手架生产一套controller和model的话，把生成的数据表名换到这里倒是可用</p>
+
+<p>不过这也不是解决办法……</p>
+
+<h2>错误提示及代码如下</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>NoMethodError in User#new
+</span><span class='line'>
+</span><span class='line'>Showing /home/akawa/projects/demo/app/views/user/new.html.erb where line #1 raised:
+</span><span class='line'>
+</span><span class='line'>undefined method `users_path' for #&lt;#&lt;Class:0xb2f3b468&gt;:0xb3013e80&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>routes.rb</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  root to: "user#index"
+</span><span class='line'>  resources :user</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>new.html.erb</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;%= form_for(@user) do |f| %&gt;
+</span><span class='line'>  &lt;%= f.label :name %&gt;
+</span><span class='line'>  &lt;%= f.text_field :name %&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;%= f.label :age %&gt;
+</span><span class='line'>  &lt;%= f.text_field :age %&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;%= f.submit 'submit' %&gt;
+</span><span class='line'>&lt;% end %&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>user_controller.rb</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UserController &lt; ApplicationController
+</span><span class='line'>  def index
+</span><span class='line'>    @users = User.all
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def show
+</span><span class='line'>    @user = User.find(params[:id])
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def new
+</span><span class='line'>    @user = User.new
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h3>经过 <a href="http://ruby-china.org/topics/8557">ruby-china</a> 上的朋友指点发现是因为没有遵守rails的命名约定</h3>
+
+<p>解决方法有两个：</p>
+
+<ul>
+<li><p>修改<code>routes.rb</code>内的<code>user</code>改为<code>users</code>，controller也改为<code>Users_controller.rb</code>，controller类名改为<code>class UsersController &lt; ApplicationController</code>，View文件夹改为<code>users</code>后可通过</p></li>
+<li><p>改表单为：<code>&lt;%= form_for @user, :url =&gt; user_index_path do |f| %&gt;</code> 注意@user是没有括号的
+或者<code>&lt;%= form_for(@user), :url =&gt; { :action =&gt; 'create' } do |f| %&gt;</code>亦可通过</p></li>
+</ul>
+
+
+<p>推荐使用第一种方法，毕竟约定大于配置</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rebirth]]></title>

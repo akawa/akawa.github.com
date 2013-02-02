@@ -5,8 +5,14 @@
         <lastmod>2013-01-23T14:56:51+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://akawa.github.com/blog/2013/02/02/bu-zun-shou-railsyue-ding-de-hou-guo-zhi-%5B%3F%5D/
+        </loc>
+        <lastmod>2013-02-02T09:02:09+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://akawa.github.com/blog/archives/</loc>
-        <lastmod>2013-01-23T14:56:51+08:00</lastmod>
+        <lastmod>2013-02-02T09:02:09+08:00</lastmod>
     </url>
     <url>
         <loc>http://akawa.github.com/robots.txt</loc>
@@ -14,6 +20,6 @@
     </url>
     <url>
         <loc>http://akawa.github.com/</loc>
-        <lastmod>2013-01-23T14:56:51+08:00</lastmod>
+        <lastmod>2013-02-02T09:02:09+08:00</lastmod>
     </url>
 </urlset>
