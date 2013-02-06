@@ -4,7 +4,7 @@
   <title><![CDATA[Well's blog]]></title>
   <link href="http://akawa.github.com/atom.xml" rel="self"/>
   <link href="http://akawa.github.com/"/>
-  <updated>2013-02-02T09:02:09+08:00</updated>
+  <updated>2013-02-06T15:32:00+08:00</updated>
   <id>http://akawa.github.com/</id>
   <author>
     <name><![CDATA[Well]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[测试新模板]]></title>
+    <link href="http://akawa.github.com/blog/2013/02/06/ce-shi-xin-mo-ban/"/>
+    <updated>2013-02-06T15:28:00+08:00</updated>
+    <id>http://akawa.github.com/blog/2013/02/06/ce-shi-xin-mo-ban</id>
+    <content type="html"><![CDATA[<p>测试一下新的模板</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[不遵守rails约定的后果之一]]></title>
@@ -109,7 +118,7 @@
 
 <hr />
 
-<h3>经过 <a href="http://ruby-china.org/topics/8557">ruby-china</a> 上的朋友指点发现是因为没有遵守rails的命名约定</h3>
+<h3>经过 <a href="http://ruby-china.org/topics/8557">ruby-china</a> 上的朋友指点发现是因为没有遵守rails的命名约定:controller <code>需要用复数单词命名</code></h3>
 
 <p>解决方法有两个：</p>
 
