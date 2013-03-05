@@ -4,7 +4,7 @@
   <title><![CDATA[Well's blog]]></title>
   <link href="http://akawa.github.com/atom.xml" rel="self"/>
   <link href="http://akawa.github.com/"/>
-  <updated>2013-02-06T15:32:00+08:00</updated>
+  <updated>2013-03-05T17:27:42+08:00</updated>
   <id>http://akawa.github.com/</id>
   <author>
     <name><![CDATA[Well]]></name>
@@ -14,11 +14,82 @@
 
   
   <entry>
-    <title type="html"><![CDATA[测试新模板]]></title>
-    <link href="http://akawa.github.com/blog/2013/02/06/ce-shi-xin-mo-ban/"/>
-    <updated>2013-02-06T15:28:00+08:00</updated>
-    <id>http://akawa.github.com/blog/2013/02/06/ce-shi-xin-mo-ban</id>
-    <content type="html"><![CDATA[<p>测试一下新的模板</p>
+    <title type="html"><![CDATA[has_secure_password的基本原理]]></title>
+    <link href="http://akawa.github.com/blog/2013/03/05/has-secure-passwordde-ji-ben-yuan-li/"/>
+    <updated>2013-03-05T17:20:00+08:00</updated>
+    <id>http://akawa.github.com/blog/2013/03/05/has-secure-passwordde-ji-ben-yuan-li</id>
+    <content type="html"><![CDATA[<p>通读第一遍《Ruby on Rails Tutorial 》时对Rails的用户验证方面不太明白,特别是密码加密后严重这部分
+只不过在model里面加了一个 <code>has_secure_password</code> 就实现了密码加密，验证的所有需求,这太神奇了</p>
+
+<p>多写了几遍后，明白大概原理:
+从Rails 3.1开始添加了新约定
+<code>has_secure_password</code>
+专门用来处理密码验证，密码加密保持和密码确认
+当然这是为了方便做用户验证功能。</p>
+
+<h3>一 在user model里要有password_digest字段属性为string</h3>
+
+<p><code>rails g model user email:string password_digest:string</code></p>
+
+<p>然后执行
+<code>rake db:migrate</code>
+进行迁徙</p>
+
+<h3>二 在app/models/user.rb中添加 <code>has_secure_password</code></h3>
+
+<p>has_secure_password会注入以下两个功能：</p>
+
+<ul>
+<li>为users添加password 和 password_confirmation实例变量来用于密码确认,这两个变量只存在与内存中用于密码验证，不必加入数据库的字段
+刚才创建的password_digest才是真正存储加密后密码的字段</li>
+</ul>
+
+
+<p>添加完毕后app/models/user.rb基本是这个样子</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  has_secure_password
+</span><span class='line'>  attr_accessible :email, :password, :password_confirmation
+</span><span class='line'>  #...
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>添加user.authenticate(password)用于密码验证
+在app/controllers/sessions_controller.rb中验证方法是这样使用的</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def create
+</span><span class='line'>  user = User.find_by_email(params[:session][:email])
+</span><span class='line'>  if user && user.authenticate(params[:session][:password])
+</span><span class='line'>    # 如验证成功就写到这里
+</span><span class='line'>    session[:remember_token] = user.id
+</span><span class='line'>    redirect_to user
+</span><span class='line'>  else
+</span><span class='line'>    # 验证失败就写这里了
+</span><span class='line'>    flash.now[:error] = "Invalid email or password"
+</span><span class='line'>    render 'new'
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
